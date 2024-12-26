@@ -16,7 +16,7 @@ BlackScholes::BlackScholes(double strike, double spot, double expiry, PayoffType
 
 double BlackScholes::operator()(double vol) const
 {
-    const int phi = static_cast<int>(payoffType_);
+    const auto phi = static_cast<int>(payoffType_);
 
     if (expiry_ > 0.0)
     {
