@@ -36,6 +36,30 @@ double BlackScholes::operator()(double vol) const
 
 
 
+double BlackScholes::impliedVol(const BlackScholes& bsm, double targetValue, double vol1, double vol2, double tol, unsigned int maxIter) const
+{
+    auto diff = [&bsm, targetValue](double vol) { return bsm(vol) - targetValue; };
+    double y1 = diff(vol1);
+    double y2 = diff(vol2);
+
+    double impliedVol = 0.0;
+    unsigned count = 0;
+    while (std::abs(vol2 - vol1) > tol && count < maxIter)
+    {
+        impliedVol = vol2 - (vol2 - vol1) * y2 / (y2 - y1);
+
+        vol1 = vol2;
+        vol2 = impliedVol;
+        y1 = y2;
+
+        y2 = diff(vol2);
+    }
+
+    return impliedVol;
+}
+
+
+
 std::pair<double, double> BlackScholes::computeNormArgs(double vol) const
 {
     double d1 = (std::log(spot_ / strike_) + (rate_ - dividend_ + 0.5 * vol*vol) * expiry_) / (vol * std::sqrt(expiry_));

@@ -14,6 +14,7 @@ public:
     ~BlackScholes() = default;
 
     double operator()(double vol) const;
+    double impliedVol(const BlackScholes&, double targetValue, double vol1, double vol2, double tol, unsigned int maxIter) const;
 
 private:
     std::pair<double, double> computeNormArgs(double vol) const;
