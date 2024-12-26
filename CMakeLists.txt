@@ -3,4 +3,13 @@ project(BlackScholes)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(BlackScholes main.cpp)
+set(SOURCES
+    BlackScholes.cpp
+    main.cpp
+)
+
+set(HEADERS
+    BlackScholes.h
+)
+
+add_executable(BlackScholes ${SOURCES} ${HEADERS})
